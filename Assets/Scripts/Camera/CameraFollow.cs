@@ -18,6 +18,8 @@ public class CameraFollow : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        if(target == null) return;
+
         if(target.position.y - transform.position.y > heightFollow)
         {
             _pointToGo = new Vector3(0, target.position.y, transform.position.z);

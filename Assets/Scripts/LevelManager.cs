@@ -9,6 +9,7 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private Canvas pauseMenu;
     [SerializeField] private Canvas deathMenu;
     [SerializeField] private Canvas winMenu;
+    [SerializeField] private Canvas firstCinematicMenu;
 
     [Space(6)]
     [Header("Navigation")]
@@ -40,17 +41,19 @@ public class LevelManager : MonoBehaviour
             Instance = this;
         else
             Destroy(gameObject);
+
+
+        pauseMenu.enabled = false;
+        winMenu.gameObject.SetActive(false);
+        deathMenu.enabled = false;
+        firstCinematicMenu.gameObject.SetActive(false);
+
+        eventSystem.firstSelectedGameObject = null;
     }
 
     private void Start()
     {
         Time.timeScale = 1;
-
-        pauseMenu.enabled = false;
-        winMenu.enabled = false;
-        deathMenu.enabled = false;
-
-        eventSystem.firstSelectedGameObject = null;
     }
 
     private void SetSlidersValues()
@@ -62,7 +65,7 @@ public class LevelManager : MonoBehaviour
 
     public void SetPauseGame()
     {
-        if (winMenu.enabled || deathMenu.enabled)
+        if (winMenu.gameObject.activeSelf|| deathMenu.enabled)
             return;
 
         _isPaused = !_isPaused;
@@ -81,10 +84,15 @@ public class LevelManager : MonoBehaviour
         SetSlidersValues();
     }
 
+    public void LaunchFirstCinematic()
+    {
+        firstCinematicMenu.gameObject.SetActive(true);
+    }
+
     public void WinGame()
     {
         Time.timeScale = 0;
-        winMenu.enabled = true;
+        winMenu.gameObject.SetActive(true);
         eventSystem.SetSelectedGameObject(firstWinButton);
     }
 

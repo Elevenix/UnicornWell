@@ -101,6 +101,10 @@ public class PlayerMovement : MonoBehaviour
                 animatorPlayer.SetBool("Fall", true);
             }
         }
+
+        // Flip player
+        if(_dirMove.x != 0)
+            turnVisual.localScale = new Vector3(Mathf.Sign(_dirMove.x) * -1, 1, 1);
     }
 
     public void OnMove(InputAction.CallbackContext value)
@@ -114,7 +118,6 @@ public class PlayerMovement : MonoBehaviour
 
         if (value.phase == InputActionPhase.Started && _dirMove.x != 0)
         {
-            turnVisual.localScale = new Vector3(_dirMove.normalized.x * -1, 1, 1);
             animatorPlayer.SetBool("Run", true);
         }
 
