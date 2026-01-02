@@ -19,6 +19,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float maxJumpHoldTime = 0.25f;
 
     [SerializeField] private ParticleSystem doubleJumpParticles;
+    [SerializeField] private RandomPitch jumpAudio;
+    [SerializeField] private RandomPitch groundedAudio;
 
     [Header("Wall Slide")]
     [SerializeField] private float wallSlideVelocity = -1;
@@ -56,6 +58,8 @@ public class PlayerMovement : MonoBehaviour
 
         if (cast)
         {
+            if(!_isGrounded)
+                groundedAudio.PlaySound();
             _actualAirJump = 0;
             _isGrounded = true;
 
@@ -133,11 +137,13 @@ public class PlayerMovement : MonoBehaviour
         {
             if (_isGrounded)
             {
+                jumpAudio.PlaySound();
                 animatorPlayer.SetTrigger("Jump");
                 StartJump(jumpForce);
             }
             else if (numberAirJump > _actualAirJump)
             {
+                jumpAudio.PlaySound();
                 _actualAirJump++;
                 animatorPlayer.SetTrigger("DoubleJump");
                 animatorWing.SetTrigger("Jump");

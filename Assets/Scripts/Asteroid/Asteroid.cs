@@ -11,6 +11,7 @@ public class Asteroid : MonoBehaviour
     [SerializeField] private bool transformIntoPlatform = true;
     [SerializeField] private bool randomRotation = true;
     public LineAsteroid lineAsteroid;
+    [SerializeField] private RandomPitch platformAudio;
 
     private Vector2 _directionToGo = Vector2.zero;
     private bool _canMove = true;
@@ -68,6 +69,8 @@ public class Asteroid : MonoBehaviour
     {
         if (_lineAsteroid != null)
             Destroy(_lineAsteroid.gameObject);
+
+        platformAudio.PlaySound();
         _canMove = false;
         SetColliders(true);
         transform.SetParent(_parent);
